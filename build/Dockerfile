@@ -70,7 +70,7 @@ FROM debian:stable-slim
 LABEL maintainer "kamuiroeru<19339328+kamuiroeru@users.noreply.github.com>"
 
 WORKDIR /
-COPY --from=builder /etc/nginx /etc
+COPY --from=builder /etc/nginx /etc/nginx
 COPY --from=builder /usr/sbin/nginx /usr/sbin
 
 # nginx ユーザを作成
