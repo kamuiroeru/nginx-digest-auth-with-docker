@@ -1,0 +1,27 @@
+# 本番環境用のdocker-compose
+
+version: '3'
+services:
+  nginx-digest-proxy:
+    image: kamuiroeru/nginx-digest-auth-with-docker:latest
+    container_name: nginx_digest
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf
+    - ./.htdigest:/etc/nginx/.htdigest:ro
+    - ./.htpasswd:/etc/nginx/.htpasswd:ro
+    ports:
+    - "8888:8888"
+    restart: always
+  python_http_server:
+    image: python:3.8-slim
+    container_name: python_http_server
+    working_dir: /example_files
+    volumes:
+    - ./example_files:/example_files:ro
+    expose:
+    - "8889"
+    ports:
+    - "127.0.0.1:8889:8889"
+    command: "python3 -m http.server 8889"
+    stop_signal: "SIGINT"  # docker-compose down に時間がかかるのを修正
+
