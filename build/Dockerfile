@@ -5,11 +5,11 @@ FROM ubuntu:20.04 as builder
 
 # 環境変数（適宜設定変更してください。2021/10/17現在の 各ページの stable or latest を選択した）
 ## nginx: https://nginx.org/en/download.html
-ARG NGINX_VER=1.20.1
+ARG NGINX_VER=1.23.1
 ## openssl: https://www.openssl.org/source/ (3.0 は nginx のソースコードで非対応)
-ARG OPENSSL_VER=1.1.1l
+ARG OPENSSL_VER=1.1.1q
 ## zlib: https://zlib.net/
-ARG ZLIB_VER=1.2.11
+ARG ZLIB_VER=1.2.12
 
 WORKDIR /root
 RUN apt update && apt upgrade -y
@@ -30,7 +30,8 @@ WORKDIR /root/nginx-${NGINX_VER}
 COPY ./nginx_configure.sh .
 ## アーキテクチャを分けて条件分岐
 RUN ./nginx_configure.sh
-RUN make && make install
+RUN make -j 4
+RUN make install
 
 # 軽い image にコピーする
 FROM debian:stable-slim
