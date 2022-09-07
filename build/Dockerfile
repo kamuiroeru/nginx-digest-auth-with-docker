@@ -6,8 +6,8 @@ FROM ubuntu:22.04 as builder
 # 環境変数（適宜設定変更してください。2021/10/17現在の 各ページの stable or latest を選択した）
 ## nginx: https://nginx.org/en/download.html
 ARG NGINX_VER=1.23.1
-## openssl: https://www.openssl.org/source/ (3.0 は nginx のソースコードで非対応)
-ARG OPENSSL_VER=1.1.1q
+## openssl: https://www.openssl.org/source/
+ARG OPENSSL_VER=3.0.5
 ## zlib: https://zlib.net/
 ARG ZLIB_VER=1.2.12
 
