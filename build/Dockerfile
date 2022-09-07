@@ -23,15 +23,14 @@ RUN git clone https://github.com/samizdatco/nginx-http-auth-digest.git
 ## openssl
 RUN wget -O - https://www.openssl.org/source/openssl-${OPENSSL_VER}.tar.gz | tar zxvf -
 ## zlib
-RUN wget -O - https://zlib.net/zlib-${ZLIB_VER}.tar.gz | tar zxvf -
+RUN wget -O - https://zlib.net/fossils/zlib-${ZLIB_VER}.tar.gz | tar zxvf -
 
 # nginx をビルド
 WORKDIR /root/nginx-${NGINX_VER}
 COPY ./nginx_configure.sh .
 ## アーキテクチャを分けて条件分岐
 RUN ./nginx_configure.sh
-RUN make -j 4
-RUN make install
+RUN make -j && make install
 
 # 軽い image にコピーする
 FROM debian:stable-slim
