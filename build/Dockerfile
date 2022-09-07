@@ -1,7 +1,7 @@
 # digest 認証可能な nginx をビルドする
 
 # ビルドステージ
-FROM ubuntu:20.04 as builder
+FROM ubuntu:22.04 as builder
 
 # 環境変数（適宜設定変更してください。2021/10/17現在の 各ページの stable or latest を選択した）
 ## nginx: https://nginx.org/en/download.html
@@ -30,10 +30,10 @@ WORKDIR /root/nginx-${NGINX_VER}
 COPY ./nginx_configure.sh .
 ## アーキテクチャを分けて条件分岐
 RUN ./nginx_configure.sh
-RUN make -j && make install
+RUN make -j 4 && make install
 
-# 軽い image にコピーする
-FROM debian:stable-slim
+# ビルド物
+FROM ubuntu:22.04
 LABEL maintainer "kamuiroeru<19339328+kamuiroeru@users.noreply.github.com>"
 
 WORKDIR /
